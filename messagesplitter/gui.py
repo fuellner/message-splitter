@@ -12,11 +12,13 @@ class GUI:
         self.label_chunksize: Label = Label(
             self.root, text="chunksize")
         self.label_chunksize.pack()
-        chunksize_var = StringVar(self.root)
-        self.input_chunksize = Entry(
-            self.root, textvariable=chunksize_var)
+        self.input_chunksize = Entry(self.root)
         self.input_chunksize.pack()
 
+        self.label_input_text = Label(
+            self.root, text="Text-Eingabe:"
+        )
+        self.label_input_text.pack()
         self.input_text: Text = Text(self.root)
         self.input_text.pack()
         self.output_text: Text = Text(self.root)
@@ -50,7 +52,7 @@ class GUI:
 
     def split_message(self) -> None:
         """method split_message"""
-        if self.input_chunksize.get() == "":
+        if not self.check_input():
             return None
         splitter = Splitter(
             int(self.input_chunksize.get()),
@@ -58,3 +60,21 @@ class GUI:
         )
         splitted_message = splitter.split_message()
         self.output_text.insert("1.0", splitted_message)
+
+    def check_input(self) -> bool:
+        """method for checking input"""
+        validation: bool = True
+
+        if self.input_text.compare('end-1c', '==', '1.0'):
+            self.label_input_text.config(fg="red")
+            validation = False
+        else:
+            self.label_input_text.config(fg="black")
+
+        if self.input_chunksize.get() == "":
+            self.label_chunksize.config(fg="red")
+            validation = False
+        else:
+            self.label_chunksize.config(fg="black")
+
+        return validation
