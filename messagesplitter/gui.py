@@ -2,10 +2,11 @@
 
 import tkinter as tk
 from splitter import Splitter
-from tkinter import IntVar, StringVar, Tk, Entry, Button, Text, Label
+from tkinter import IntVar, StringVar, Tk, Entry, Button, Text, Label, Checkbutton
 
 
 class GUI:
+    """GUI class"""
     def __init__(self) -> None:
         self.root: Tk = Tk()
 
@@ -14,6 +15,21 @@ class GUI:
         self.label_chunksize.pack()
         self.input_chunksize = Entry(self.root)
         self.input_chunksize.pack()
+
+        self.checkstate: IntVar = IntVar()
+        self.checkbutton: Checkbutton = Checkbutton(
+            self.root,
+            text='Eingabe-Datei verwenden',
+            variable=self.checkstate,
+            onvalue=1,
+            offvalue=0
+        )
+        self.checkbutton.pack()
+
+        self.label_filepath: Label = Label(self.root, text="Datei-Pfad")
+        self.label_filepath.pack()
+        self.input_filepath = Entry(self.root)
+        self.input_filepath.pack()
 
         self.label_input_text = Label(
             self.root, text="Text-Eingabe:"
@@ -53,7 +69,10 @@ class GUI:
     def split_message(self) -> None:
         """method split_message"""
         if not self.check_input():
-            return None
+            return
+        if self.checkstate.get() == 1:
+            content = self.load_file(self.input_filepath.get())
+            self.input_text.insert("1.0", content)
         splitter = Splitter(
             int(self.input_chunksize.get()),
             self.input_text.get("1.0", tk.END)
@@ -65,7 +84,7 @@ class GUI:
         """method for checking input"""
         validation: bool = True
 
-        if self.input_text.compare('end-1c', '==', '1.0'):
+        if self.input_text.compare('end-1c', '==', '1.0') and self.checkstate.get() == 0:
             self.label_input_text.config(fg="red")
             validation = False
         else:
@@ -77,4 +96,13 @@ class GUI:
         else:
             self.label_chunksize.config(fg="black")
 
+        if self.checkstate.get() == 1 and self.input_filepath.get() == "":
+            self.label_filepath.config(fg="red")
+            validation = False
+
         return validation
+
+    def load_file(self, file_path: str) -> str:
+        """load_file method"""
+        with open(file_path, encoding = 'utf-8') as f:
+            return f.read()

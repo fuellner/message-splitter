@@ -13,7 +13,10 @@ class Application:
 
     def run(self) -> None:
         """method run"""
-        self.gui.run_mainloop()
+        if not self.cli.arguments == []:
+            self.gui.run_mainloop()
+        else:
+            print("wir sind drin")
 
     def get_cli(self) -> CLI:
         """method get_cli"""
