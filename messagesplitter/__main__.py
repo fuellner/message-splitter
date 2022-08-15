@@ -6,7 +6,9 @@ from application import Application
 def main() -> None:
     """main method"""
     cli = CLI()
-    cli.process_arguments()
+    if not cli.process_arguments():
+        print("try again!")
+        return
     app: Application = Application(cli)
     app.run()
 

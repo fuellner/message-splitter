@@ -3,35 +3,50 @@
 import getopt
 import sys
 import os
-import time
 from typing import Tuple
 
 class CLI:
+    """CLI class"""
     def __init__(self) -> None:
-        self.arg_length: int = len(sys.argv)
-        self.argument_list: list[str]  = sys.argv[1:]
-        self.options: str = "hf:o:n:"
-        self.long_options: list[str] = ["help", "file=", "output=", "chunkSize="]
         self.arguments: list[Tuple[str, str]]
-        self.ueberhang:list[str]
+        self.ueberhang: list[str]
+        self.output_filename: str = ""
+        self.input_file: str = ""
+        self.chunk_size: int = 0
 
-    def process_arguments(self) -> None:
+    def process_arguments(self) -> bool:
         """process_arguments method"""
         try:
-            self.arguments, self.ueberhang = getopt.getopt(self.argument_list, self.options, self.long_options)
-            print(self.arguments)
-            return
-            
-            for currentArgument, currentValue in self.arguments:
-                if currentArgument in ("-h", "--help"):
+            self.arguments, self.ueberhang = getopt.getopt(
+                sys.argv[1:],
+                "hf:o:n:",
+                ["help", "file=", "output=", "chunksize="]
+            )
+            for current_argument, current_value in self.arguments:
+                if current_argument in ("-h", "--help"):
                     print ("displaying help")
-                if currentArgument in ("-f", "--file"):
-                    if os.path.exists(currentValue):
-                        with open(currentValue, "r") as file:
-                            self.inputFile = file.read()
-                if currentArgument in ("-o", "--output"):
-                    self.outputFileName = currentValue
-                if currentArgument in ("-n", "--chunkSize"):
-                    self.chunkSize = int(currentValue)
+                if current_argument in ("-f", "--file"):
+                    if os.path.exists(current_value):
+                        with open(current_value, "r", encoding="utf-8") as file:
+                            self.input_file = file.read()
+                if current_argument in ("-o", "--output"):
+                    self.output_filename = current_value
+                if current_argument in ("-n", "--chunksize"):
+                    self.chunk_size = int(current_value)
         except getopt.error as err:
             print (str(err))
+        return self.check_params()
+
+    def check_params(self) -> bool:
+        """check_params method """
+        result: bool = True
+        if not bool(self.chunk_size):
+            print("chunksize not given but required")
+            result = False
+        if not bool(self.output_filename):
+            print("output filename not given but required")
+            result = False
+        if not bool(self.input_file):
+            print("input file not given but required")
+            result = False
+        return result
