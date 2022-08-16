@@ -61,10 +61,10 @@ class Splitter:
 
     def get_input_string(self) -> str:
         """method set_input_text"""
-        if self.input_string is not None:
+        if self.input_string != "":
             return self.input_string
 
-        if self.file_path is not "":
+        if self.file_path != "":
             try:
                 with open(self.file_path, 'r', encoding="utf-8") as file:
                     return file.read()

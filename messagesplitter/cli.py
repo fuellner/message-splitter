@@ -4,6 +4,7 @@ import getopt
 import sys
 import os
 from typing import Tuple
+from splitter import Splitter
 
 class CLI:
     """CLI class"""
@@ -26,9 +27,7 @@ class CLI:
                 if current_argument in ("-h", "--help"):
                     print ("displaying help")
                 if current_argument in ("-f", "--file"):
-                    if os.path.exists(current_value):
-                        with open(current_value, "r", encoding="utf-8") as file:
-                            self.input_file = file.read()
+                    self.input_file = current_value
                 if current_argument in ("-o", "--output"):
                     self.output_filename = current_value
                 if current_argument in ("-n", "--chunksize"):
@@ -50,3 +49,13 @@ class CLI:
             print("input file not given but required")
             result = False
         return result
+
+    def split_message(self) -> str:
+        """split_message method in CLI class"""
+        splitter = Splitter(
+            self.chunk_size,
+            "",
+            self.input_file,
+            self.output_filename
+        )
+        return splitter.split_message()
