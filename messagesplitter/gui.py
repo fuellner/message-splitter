@@ -2,11 +2,12 @@
 
 import tkinter as tk
 from splitter import Splitter
-from tkinter import IntVar, StringVar, Tk, Entry, Button, Text, Label, Checkbutton
+from tkinter import IntVar, Tk, Entry, Button, Text, Label, Checkbutton
 
 
 class GUI:
     """GUI class"""
+
     def __init__(self) -> None:
         self.root: Tk = Tk()
 
@@ -68,16 +69,19 @@ class GUI:
 
     def split_message(self) -> None:
         """method split_message"""
+        splitter: Splitter = Splitter()
         if not self.check_input():
             return
         if self.checkstate.get() == 1:
-            content = self.load_file(self.input_filepath.get())
+            content: str = splitter.load_input_string(
+                self.input_filepath.get()
+            )
             self.input_text.insert("1.0", content)
-        splitter = Splitter(
+
+        splitted_message: str = splitter.split_message(
             int(self.input_chunksize.get()),
-            self.input_text.get("1.0", tk.END)
+            self.input_text.get("1.0", tk.END),
         )
-        splitted_message = splitter.split_message()
         self.output_text.insert("1.0", splitted_message)
 
     def check_input(self) -> bool:
@@ -101,8 +105,3 @@ class GUI:
             validation = False
 
         return validation
-
-    def load_file(self, file_path: str) -> str:
-        """load_file method"""
-        with open(file_path, encoding = 'utf-8') as f:
-            return f.read()

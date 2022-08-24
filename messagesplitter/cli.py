@@ -2,7 +2,6 @@
 
 import getopt
 import sys
-import os
 from typing import Tuple
 from splitter import Splitter
 
@@ -17,7 +16,12 @@ class CLI:
 
     def process_arguments(self) -> bool:
         """process_arguments method"""
+        print(len(sys.argv))
+        
         try:
+            if len(sys.argv) == 1:
+                return False
+
             self.arguments, self.ueberhang = getopt.getopt(
                 sys.argv[1:],
                 "hf:o:n:",
@@ -50,12 +54,6 @@ class CLI:
             result = False
         return result
 
-    def split_message(self) -> str:
-        """split_message method in CLI class"""
-        splitter = Splitter(
-            self.chunk_size,
-            "",
-            self.input_file,
-            self.output_filename
-        )
-        return splitter.split_message()
+    def count_cli_params(self) -> int:
+        """count_cli_params method"""
+        return len(sys.argv)

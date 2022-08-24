@@ -2,6 +2,7 @@
 
 from cli import CLI
 from gui import GUI
+from splitter import Splitter
 
 
 class Application:
@@ -13,9 +14,15 @@ class Application:
 
     def run(self) -> None:
         """method run"""
-        if self.cli.process_arguments():
-            self.cli.split_message()
-        else:
+        if self.cli.count_cli_params() > 1 and self.cli.process_arguments():
+            splitter: Splitter = Splitter()
+            splitter.split_message(
+                self.cli.chunk_size,
+                splitter.load_input_string(self.cli.input_file),
+                True,
+                self.cli.output_filename
+            )
+        elif self.cli.count_cli_params() == 1:
             self.gui.run_mainloop()
 
     def get_cli(self) -> CLI:
