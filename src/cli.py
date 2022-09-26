@@ -1,9 +1,8 @@
-# cli.py
+"""cli.py"""
 
 import getopt
 import sys
 from typing import Tuple
-from splitter import Splitter
 
 class CLI:
     """CLI class"""
@@ -16,12 +15,7 @@ class CLI:
 
     def process_arguments(self) -> bool:
         """process_arguments method"""
-        print(len(sys.argv))
-        
         try:
-            if len(sys.argv) == 1:
-                return False
-
             self.arguments, self.ueberhang = getopt.getopt(
                 sys.argv[1:],
                 "hf:o:n:",
@@ -41,7 +35,7 @@ class CLI:
         return self.check_params()
 
     def check_params(self) -> bool:
-        """check_params method """
+        """check_params method"""
         result: bool = True
         if not bool(self.chunk_size):
             print("chunksize not given but required")
@@ -57,3 +51,4 @@ class CLI:
     def count_cli_params(self) -> int:
         """count_cli_params method"""
         return len(sys.argv)
+

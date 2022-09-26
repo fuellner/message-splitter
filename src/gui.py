@@ -1,7 +1,7 @@
 """module GUI"""
 
 import tkinter as tk
-from splitter import Splitter
+from splitter import *
 from tkinter import IntVar, Tk, Entry, Button, Text, Label, Checkbutton
 
 

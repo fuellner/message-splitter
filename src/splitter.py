@@ -5,7 +5,6 @@ import time
 
 class Splitter:
     """class for splitting functionality"""
-
     def split_message(
             self,
             chunk_size: int,
