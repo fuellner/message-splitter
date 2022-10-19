@@ -6,7 +6,6 @@ import sys
 import tkinter as tk
 from tkinter import Canvas, filedialog, Text
 
-
 root = tk.Tk()
 apps = []
 

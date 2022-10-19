@@ -1,8 +1,8 @@
 """module GUI"""
 
 import tkinter as tk
-from splitter import *
 from tkinter import IntVar, Tk, Entry, Button, Text, Label, Checkbutton
+from src.splitter import Splitter
 
 
 class GUI:
@@ -10,7 +10,6 @@ class GUI:
 
     def __init__(self) -> None:
         self.root: Tk = Tk()
-
         self.label_chunksize: Label = Label(
             self.root, text="chunksize")
         self.label_chunksize.pack()

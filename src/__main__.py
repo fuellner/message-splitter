@@ -3,11 +3,12 @@
 from cli import CLI
 from application import Application
 
+
 def main() -> None:
     """main method"""
-    cli = CLI()
-    app: Application = Application(cli)
+    app: Application = Application()
     app.run()
+
 
 if __name__ == '__main__':
     main()

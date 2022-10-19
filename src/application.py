@@ -8,12 +8,13 @@ from splitter import Splitter
 class Application:
     """class Application"""
 
-    def __init__(self, cli: CLI) -> None:
-        self.cli: CLI = cli
+    def __init__(self) -> None:
+        self.cli: CLI = CLI()
         self.gui: GUI = GUI()
 
     def run(self) -> None:
         """method run"""
+        self.cli.read_arguments()
         if self.cli.count_cli_params() > 1 and self.cli.process_arguments():
             splitter: Splitter = Splitter()
             splitter.split_message(
