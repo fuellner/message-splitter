@@ -2,7 +2,7 @@
 
 import tkinter as tk
 from tkinter import IntVar, Tk, Entry, Button, Text, Label, Checkbutton
-from src.splitter import Splitter
+from splitter import Splitter
 
 
 class GUI:
@@ -41,11 +41,13 @@ class GUI:
         self.output_text.pack()
 
         self.convert_button: Button = Button(
-            self.root, text="convert", command=self.split_message)
+            self.root, text="convert", command=self.split_message
+        )
         self.convert_button.pack()
 
         self.delete_button: Button = Button(
-            self.root, text="delete", command=self.delete_input)
+            self.root, text="delete", command=self.delete_input
+        )
         self.delete_button.pack()
 
         self.quit_button: Button = Button(
