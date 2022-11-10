@@ -1,7 +1,7 @@
 """test_gui"""
 
-from tkinter import Button, Checkbutton, Entry, IntVar, Label, Text, Tk
 import tkinter as tk
+from tkinter import Button, Checkbutton, Entry, IntVar, Label, Text, Tk
 from src.gui import GUI
 
 

@@ -1,7 +1,6 @@
 """__main__.py module"""
 
-from cli import CLI
-from application import Application
+from src.application import Application
 
 
 def main() -> None:

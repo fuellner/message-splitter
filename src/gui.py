@@ -2,7 +2,7 @@
 
 import tkinter as tk
 from tkinter import IntVar, Tk, Entry, Button, Text, Label, Checkbutton
-from splitter import Splitter
+from src.splitter import Splitter
 
 
 class GUI:

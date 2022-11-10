@@ -1,8 +1,8 @@
 """app.py module"""
 
-from cli import CLI
-from gui import GUI
-from splitter import Splitter
+from src.cli import CLI
+from src.gui import GUI
+from src.splitter import Splitter
 
 
 class Application:
