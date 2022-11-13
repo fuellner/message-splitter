@@ -37,6 +37,10 @@ class GUI:
         self.label_input_text.pack()
         self.input_text: Text = Text(self.root)
         self.input_text.pack()
+        self.label_output_text = Label(
+            self.root, text="Aufgeteilte Ausgabe:"
+        )
+        self.label_output_text.pack()
         self.output_text: Text = Text(self.root)
         self.output_text.pack()
 
