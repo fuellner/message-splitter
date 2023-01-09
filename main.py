@@ -1,4 +1,4 @@
-"""__main__.py module"""
+"""main.py module"""
 
 from src.application import Application
 

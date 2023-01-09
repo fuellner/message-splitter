@@ -10,53 +10,56 @@ class GUI:
 
     def __init__(self) -> None:
         self.root: Tk = Tk()
-        self.label_chunksize: Label = Label(
-            self.root, text="chunksize")
-        self.label_chunksize.pack()
+        # label chunksize
+        self.label_chunksize: Label = Label(self.root, text="chunksize:")
+        self.label_chunksize.grid(row=0, column=0)
+        # input field chunksize
         self.input_chunksize = Entry(self.root)
-        self.input_chunksize.pack()
-
+        self.input_chunksize.grid(row=1, column=0)
+        # label filepath
+        self.label_filepath: Label = Label(self.root, text="file path:")
+        self.label_filepath.grid(row=2, column=0)
+        # input field file path
+        self.input_filepath = Entry(self.root)
+        self.input_filepath.grid(row=3, column=0)
+        # checkbox for input file (path) option
         self.checkstate: IntVar = IntVar()
-        self.checkbutton: Checkbutton = Checkbutton(
+        self.checkbox: Checkbutton = Checkbutton(
             self.root,
-            text='Eingabe-Datei verwenden',
+            text='use input file',
             variable=self.checkstate,
             onvalue=1,
             offvalue=0
         )
-        self.checkbutton.pack()
-
-        self.label_filepath: Label = Label(self.root, text="Datei-Pfad")
-        self.label_filepath.pack()
-        self.input_filepath = Entry(self.root)
-        self.input_filepath.pack()
-
-        self.label_input_text = Label(
-            self.root, text="Text-Eingabe:"
-        )
-        self.label_input_text.pack()
+        self.checkbox.grid(row=3, column=1)
+        # label input text
+        self.label_input_text = Label(self.root, text="input text:")
+        self.label_input_text.grid(row=4, column=0)
+        # input text field
         self.input_text: Text = Text(self.root)
-        self.input_text.pack()
+        self.input_text.grid(row=5, column=0)
+        # label output text
         self.label_output_text = Label(
-            self.root, text="Aufgeteilte Ausgabe:"
+            self.root, text="splitted output:"
         )
-        self.label_output_text.pack()
+        self.label_output_text.grid(row=6, column=0)
+        # output text field
         self.output_text: Text = Text(self.root)
-        self.output_text.pack()
-
+        self.output_text.grid(row=7, column=0)
+        # convert button
         self.convert_button: Button = Button(
-            self.root, text="convert", command=self.split_message
+            self.root, text="split!", command=self.split_message
         )
-        self.convert_button.pack()
-
+        self.convert_button.grid(row=8, column=0)
+        # delete button
         self.delete_button: Button = Button(
-            self.root, text="delete", command=self.delete_input
+            self.root, text="clear all fields", command=self.delete_input
         )
-        self.delete_button.pack()
-
+        self.delete_button.grid(row=8, column=1)
+        # quit button
         self.quit_button: Button = Button(
             self.root, text="quit", command=self.quit_app)
-        self.quit_button.pack()
+        self.quit_button.grid(row=8, column=2)
 
     def delete_input(self) -> None:
         """method delete_input"""

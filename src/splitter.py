@@ -20,21 +20,25 @@ class Splitter:
         offset: int = 0
         input_text_length: int = len(input_text)
         i: int = 0
+        optional_space: str = ""
 
         while i <= input_text_length:
-            if (i + chunk_size <= input_text_length
-                    and input_text[i + chunk_size] != " "):
-                while input_text[i + (chunk_size - offset)] != " ":
+            if (i + chunk_size <= input_text_length) and input_text[i + chunk_size] != " ":
+                while offset < chunk_size and input_text[i + (chunk_size - offset)] != " ":
                     offset += 1
+                    optional_space = ""
+            if offset == chunk_size:
+                offset = 0
+                optional_space = " "
             chunks.append(input_text[i: i + chunk_size - offset])
             i = i + chunk_size - offset
             offset = 0
-
         chunk_count = len(chunks)
         chunks[0] = "1" + "/" + str(chunk_count) + " " + chunks[0]
 
         for k in range(1, chunk_count, 1):
-            chunks[k] = str(k + 1) + "/" + str(chunk_count) + chunks[k]
+            chunks[k] = str(k + 1) + "/" + str(chunk_count) + \
+                optional_space + chunks[k]
 
         for chunk in chunks:
             output = output + chunk + "\n\n--------------------------------------\n\n"

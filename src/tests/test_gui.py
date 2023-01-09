@@ -13,7 +13,7 @@ def test_gui_init_positive() -> None:
     assert isinstance(gui.label_chunksize, Label) is True
     assert isinstance(gui.input_chunksize, Entry) is True
     assert isinstance(gui.checkstate, IntVar) is True
-    assert isinstance(gui.checkbutton, Checkbutton) is True
+    assert isinstance(gui.checkbox, Checkbutton) is True
     assert isinstance(gui.label_filepath, Label) is True
     assert isinstance(gui.input_filepath, Entry) is True
     assert isinstance(gui.label_input_text, Label) is True
