@@ -1,9 +1,10 @@
-"""
+﻿"""
 widget classes module
 """
 
 import customtkinter as ctk
 import src.splitter as s
+from tkinter import filedialog
 
 
 class OptionsFrame(ctk.CTkFrame):
@@ -31,6 +32,11 @@ class OptionsFrame(ctk.CTkFrame):
 
 
 class ConvertFrame(ctk.CTkFrame):
+    """
+    widget with input and output fields aswell as buttons for triggering the splitting conversion and clearing the
+    fields
+    """
+
     def __init__(self,
                  parent,
                  input_text: ctk.StringVar,
@@ -51,11 +57,57 @@ class ConvertFrame(ctk.CTkFrame):
         self.output = ctk.CTkTextbox(master=self, height=300, width=450)
         self.output.pack(expand=True, fill="x")
 
-        ctk.CTkButton(master=self, text="Convert",
-                      command=self.convert).pack(side="left", padx=10, pady=10, fill="x")
+        frame1 = ctk.CTkFrame(master=self)
 
-        ctk.CTkButton(master=self, text="Clear",
-                      command=self.clear).pack(side="right", padx=10, pady=10, fill="x")
+        ctk.CTkButton(
+            master=frame1,
+            text="Convert",
+            command=self.convert
+        ).pack(
+            side="left",
+            padx=10,
+            pady=10,
+            fill="x"
+        )
+
+        ctk.CTkButton(
+            master=frame1,
+            text="Clear",
+            command=self.clear
+        ).pack(
+            side="right",
+            padx=10,
+            pady=10,
+            fill="x"
+        )
+
+        frame1.pack()
+
+        frame2 = ctk.CTkFrame(master=self)
+
+        ctk.CTkButton(
+            master=frame2,
+            text="open file",
+            command=self.open_file
+        ).pack(
+            side="left",
+            padx=10,
+            pady=10,
+            fill="x"
+        )
+
+        ctk.CTkButton(
+            master=frame2,
+            text="save to file",
+            command=self.save_to_file
+        ).pack(
+            side="left",
+            padx=10,
+            pady=10,
+            fill="x"
+        )
+
+        frame2.pack()
 
     def convert(self) -> None:
         """wrapper function for using the actual logic of the splitter class"""
@@ -68,3 +120,13 @@ class ConvertFrame(ctk.CTkFrame):
     def clear(self) -> None:
         self.input_text.set(value="")
         self.output.delete(index1="0.0", index2="end")
+
+    def save_to_file(self) -> None:
+        file: IO[Incomplete] | None = filedialog.asksaveasfile()
+        file.write(self.output.get(index1="0.0", index2="end"))
+        file.close()
+
+    def open_file(self) -> None:
+        file: IO[Incomplete] | None = filedialog.askopenfile()
+        self.input_text.set(value=file.read())
+        file.close()

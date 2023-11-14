@@ -9,8 +9,11 @@ class Splitter:
         self.input_text: str = input_text
         self.output_text: str = ""
 
-    def split_message(self):
+    def split_message(self) -> str:
         """method which does the actual splitting"""
+        if self.chunk_size < 1 or not self.input_text:
+            return ""
+
         chunks: list[str] = []
         offset: int = 0
         input_text_length: int = len(self.input_text)

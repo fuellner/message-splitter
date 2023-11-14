@@ -1,9 +1,8 @@
-"""main.py module"""
+﻿"""main.py module"""
 import customtkinter as ctk
 import src.widgets as w
 
 # TODO: implement CLI
-# TODO: make it possible to write result into file
 # TODO: Option menu; first option is switch between light and dark mode
 
 
@@ -15,7 +14,7 @@ class Application(ctk.CTk):
         self.title(string="Message Splitter")
 
         # layout
-        self.rowconfigure(index=0, weight=2)
+        self.rowconfigure(index=0, weight=3)
         self.rowconfigure(index=1, weight=5)
         self.rowconfigure(index=2, weight=5)
         self.columnconfigure(index=0, weight=1, uniform="a")
@@ -30,13 +29,13 @@ class Application(ctk.CTk):
             parent=self,
             chunk_size=self.chunk_size
 
-        ).grid(row=0, column=0, padx=10, pady=10)
+        ).grid(row=0, column=0)
 
         w.ConvertFrame(
             parent=self,
             input_text=self.input_text,
             chunk_size=self.chunk_size
-        ).grid(row=1, column=0, padx=10, pady=10)
+        ).grid(row=1, column=0)
 
 
 if __name__ == "__main__":
