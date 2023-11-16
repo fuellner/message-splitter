@@ -1,9 +1,8 @@
 ﻿"""main.py module"""
+from sys import argv
 import customtkinter as ctk
 import src.widgets as w
-
-# TODO: implement CLI
-# TODO: Option menu; first option is switch between light and dark mode
+from src.cli import CLI
 
 
 class Application(ctk.CTk):
@@ -39,4 +38,7 @@ class Application(ctk.CTk):
 
 
 if __name__ == "__main__":
-    Application().mainloop()
+    if argv[1:]:
+        CLI().run()
+    else:
+        Application().mainloop()

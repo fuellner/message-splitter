@@ -1,58 +1,43 @@
-"""cli.py"""
+﻿"""cli.py"""
 
-import getopt
-import sys
-from typing import Tuple
+from src.splitter import Splitter
+from argparse import ArgumentParser, Namespace
 
 
 class CLI:
-    """CLI class"""
-
     def __init__(self) -> None:
-        self.arguments: list[Tuple[str, str]]
-        self.ueberhang: list[str]
-        self.output_filename: str = ""
-        self.input_file: str = ""
-        self.chunk_size: int = 0
+        # initialize propterties
+        self.file_content: str = ""
 
-    def process_arguments(self) -> bool:
-        """process_arguments method"""
-        for current_argument, current_value in self.arguments:
-            if current_argument in ("-h", "--help"):
-                print("displaying help")
-            if current_argument in ("-f", "--file"):
-                self.input_file = current_value
-            if current_argument in ("-o", "--output"):
-                self.output_filename = current_value
-            if current_argument in ("-n", "--chunksize"):
-                self.chunk_size = int(current_value)
-        return self.check_params()
+        # build actual CLI
+        self.parser = ArgumentParser()
+        self.parser.add_argument(
+            "-i", "--input", help="Defines the input file with content to split.", required=True)
+        self.parser.add_argument(
+            "-o", "--output", help="Defines the output file for writing splitted content to.", required=False)
+        self.parser.add_argument(
+            "-c", "--chunksize", help="character size of chunks in which the given text shall be splitted.", required=True)
 
-    def check_params(self) -> bool:
-        """check_params method"""
-        result: bool = True
-        if not bool(self.chunk_size):
-            print("chunksize not given but required")
-            result = False
-        if not bool(self.output_filename):
-            print("output filename not given but required")
-            result = False
-        if not bool(self.input_file):
-            print("input file not given but required")
-            result = False
-        return result
+    def run(self) -> None:
+        self.args: Namespace = self.parser.parse_args()
+        self._open_file()
+        self._split_content()
+        self._handle_output()
 
-    def count_cli_params(self) -> int:
-        """count_cli_params method"""
-        return len(sys.argv)
+    def _open_file(self) -> None:
+        with open(file=self.args.input) as file:
+            self.file_content: str = file.read()
 
-    def read_arguments(self) -> None:
-        """read arguments from command line"""
-        try:
-            self.arguments, self.ueberhang = getopt.getopt(
-                sys.argv[1:],
-                "hf:o:n:",
-                ["help", "file=", "output=", "chunksize="]
-            )
-        except getopt.error as err:
-            print(str(err))
+    def _split_content(self) -> None:
+        self.splitted_text: str = Splitter(
+            chunk_size=int(self.args.chunksize), input_text=self.file_content).split_message()
+
+    def _handle_output(self) -> None:
+        if self.args.output:
+            try:
+                with open(file=self.args.output, mode="w") as file:
+                    file.write(self.splitted_text)
+            except:
+                raise IOError("file could not be written")
+        else:
+            print(self.splitted_text)
