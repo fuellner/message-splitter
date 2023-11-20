@@ -20,19 +20,15 @@ class Application(ctk.CTk):
 
         # data
         self.chunk_size = ctk.IntVar()
-        self.input_text = ctk.StringVar()
-        self.output_text = ctk.StringVar()
 
         # widgets
         w.OptionsFrame(
             parent=self,
             chunk_size=self.chunk_size
-
         ).grid(row=0, column=0)
 
         w.ConvertFrame(
             parent=self,
-            input_text=self.input_text,
             chunk_size=self.chunk_size
         ).grid(row=1, column=0)
 
